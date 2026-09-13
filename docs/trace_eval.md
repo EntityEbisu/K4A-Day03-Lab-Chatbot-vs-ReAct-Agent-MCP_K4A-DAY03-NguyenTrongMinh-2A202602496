@@ -1,8 +1,8 @@
 # 📊 BÁO CÁO THU HOẠCH NGHIỆM THU BÀI LAB 3 (BƯỚC 3 — SUBMISSION ARTIFACT)
 
-> **Họ và Tên Học viên:** [Điền Họ và Tên]  
-> **Mã Sinh Viên / Mã Học viên:** [Điền MSSV]  
-> **Chủ đề Lựa chọn:** [Điền tên chủ đề đã chọn từ docs/DANH_SACH_DE_TAI.md hoặc Đề tài Mở]  
+> **Họ và Tên Học viên:** Nguyen Trong Minh
+> **Mã Sinh Viên / Mã Học viên:** 2A202602496
+> **Chủ đề Lựa chọn:** 1.1 Trợ lý Học vụ & Tra cứu Lịch thi VinUni (Tra cứu điểm GPA, lịch thi và đặt lịch tư vấn học vụ với Cố vấn)
 
 ---
 
@@ -10,11 +10,11 @@
 
 | Tiêu chí Đánh giá | Mức độ (1 - 5) | Giải trình chi tiết lý do chọn điểm |
 | :--- | :---: | :--- |
-| **1. Multi-step Reasoning** | / 5 | Bài toán có yêu cầu chia nhỏ nhiều bước suy luận nối tiếp nhau không? |
-| **2. Tool Interaction** | / 5 | Hệ thống có cần kết nối với MCP Server / Cơ sở dữ liệu bên ngoài không? |
-| **3. Dynamic Decision** | / 5 | Bước tiếp theo có phụ thuộc vào kết quả quan sát bước trước không? |
-| **4. Long Horizon Goal** | / 5 | Hệ thống có phải giữ mục tiêu xuyên suốt qua nhiều lượt xử lý không? |
-| **TỔNG ĐIỂM AGENTIC FIT** | **/ 20** | *Nếu tổng điểm > 12/20: Bài toán rất phù hợp triển khai Agentic System.* |
+| **1. Multi-step Reasoning** | 4 / 5 | Bài toán yêu cầu suy luận đa bước rõ rệt: TC04 phải tra cứu `academic_query` để lấy tên cố vấn trước, sau đó mới gọi `schedule_appointment`. Ngay cả TC03 đơn bước vẫn cần trích xuất 3 tham số (student_id, datetime, advisor) và validate trước khi gọi tool. Không phải FAQ một bước. |
+| **2. Tool Interaction** | 5 / 5 | Bắt buộc kết nối MCP Server để lấy dữ liệu thời gian thực (GPA, email, advisor, booking_id). LLM không thể trả lời chính xác nếu thiếu `academic_query`/`schedule_appointment` qua JSON-RPC 2.0; hallucination sẽ xảy ra nếu chỉ dùng kiến thức tĩnh. |
+| **3. Dynamic Decision** | 4 / 5 | Bước tiếp theo phụ thuộc hoàn toàn vào Observation: nếu `academic_query` trả về SUCCESS thì đặt lịch với advisor tương ứng; nếu NOT_FOUND (TC05 - SV9999999) thì dừng và trả lời lịch sự thay vì gọi tiếp. Decision phân nhánh theo kết quả tool. |
+| **4. Long Horizon Goal** | 3 / 5 | Cần giữ mục tiêu xuyên suốt 2-3 lượt ReAct (ví dụ: "đặt lịch cho SV2026002 vào 20/09" phải nhớ cả student_id, datetime và advisor đã tra cứu). Horizon ngắn-trung bình, chưa đến mức multi-session memory nhưng vượt quá chat một lượt. |
+| **TỔNG ĐIỂM AGENTIC FIT** | **16 / 20** | *Nếu tổng điểm > 12/20: Bài toán rất phù hợp triển khai Agentic System. => 16/20: Khuyến nghị ReAct Agent + MCP, không dùng Chatbot thuần túy.* |
 
 ---
 
